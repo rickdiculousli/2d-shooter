@@ -19,8 +19,8 @@ Emitter::Emitter(SpriteSystem *spriteSys) {
 	haveImage = false;
 	haveSound = false;
 	velocity = ofVec3f(0, 0, 0);
-	childDirection = ofVec3f(1, 1, 0).normalize();
-	childSpeed = 100;
+	childDirection = ofVec3f(1, 1, 0).normalize();  // normalized vector for direction
+	childSpeed = 100;  //multiplier of unit direction
 	drawable = true;
 	width = 50;
 	height = 50;
@@ -33,7 +33,7 @@ Emitter::Emitter(SpriteSystem *spriteSys) {
 //
 void Emitter::draw() {
 	if (drawable) {
-
+		// draw image or default shape if not available
 		if (haveImage) {
 			image.draw(-image.getWidth() / 2.0 + trans.x, -image.getHeight() / 2.0 + trans.y);
 		}
@@ -44,8 +44,6 @@ void Emitter::draw() {
 		}
 	}
 
-	// draw sprite system
-	//
 	sys->draw();
 }
 
@@ -59,13 +57,13 @@ void Emitter::update() {
 			// spawn a new sprite
 			spawnSprite(time);
 			lastSpawned = time;
+			// play bullet sound
 			if(haveSound) bulletSound.play();
 		}
 	}
-	cout << "spritesys# (" << sys->sprites.size() <<")" << endl;
 	trans += velocity;
 	if (isBoundByWindow) windowBounds();
-		
+	
 	sys->update();
 }
 
@@ -74,6 +72,8 @@ void Emitter::update() {
 void Emitter::start() {
 	started = true;
 	float time = ofGetElapsedTimeMillis();
+
+	// spawn a sprite instantly if possible
 	if ((time - lastSpawned) > (1000.0 / rate))
 	{
 		if (haveSound) bulletSound.play();
@@ -97,6 +97,9 @@ void Emitter::setVelocity(ofVec3f v) {
 	velocity = v;
 }
 
+//	Seperating srpite velocity into speed and direction
+//	for easier manipulation
+//
 void Emitter::setChildVelocity(ofVec3f dir, float speed) {
 	childDirection = dir.normalize();
 	childSpeed = speed;
@@ -135,6 +138,8 @@ void Emitter::setWindowBound(bool b) {
 	isBoundByWindow = b;
 }
 
+//	Bounds check and restraint for emitter.
+//	
 void Emitter::windowBounds() {
 	float xOffset, yOffset;
 	if (haveImage) {
@@ -151,6 +156,8 @@ void Emitter::windowBounds() {
 	if ((trans.y + yOffset) > ofGetWindowHeight()) trans.y = ofGetWindowHeight() - yOffset;
 }
 
+//	Sprite spawning method
+//	
 void Emitter::spawnSprite(float time) {
 	Sprite sprite;
 	if (haveChildImage) sprite.setImage(childImage);

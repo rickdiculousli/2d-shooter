@@ -26,23 +26,22 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		ofImage defaultImage;
-		bool imageLoaded;
-
+		// ofxGui Stuff
 		bool bHide;
-
 		ofxFloatSlider fireRate;
 		ofxFloatSlider life;
 		ofxFloatSlider direction;
 		ofxFloatSlider fireSpeed;
 		ofxLabel screenSize;
-
 		ofxPanel gui;
 
 		// Player info
 		Emitter *player;
-		int move[4];
+		int move[4];	// directional key press array
 		float playerSpeed;
 		ofVec3f playerVelocity, principleDir;
+
+		//Game state
+		bool gameStart = false;
 
 };

@@ -102,16 +102,16 @@ void SpriteSystem::update() {
 	vector<Sprite>::iterator s = sprites.begin();
 	vector<Sprite>::iterator tmp;
 
-	// check which sprites have exceed their lifespan or are out of bounds and delete
+	// check which sprites have exceed their lifespan and delete
 	// from list.  When deleting multiple objects from a vector while
 	// traversing at the same time, use an iterator.
 	//
+	// Also checks for out of bounds if applicable
 	while (s != sprites.end()) {
 
 		bool outsideWindow = s->trans.x < 0 || s->trans.y < 0 || s->trans.x > ofGetWindowWidth() || s->trans.y > ofGetWindowHeight();
 		if ((isBoundByWindow && outsideWindow) ||
 			(s->lifespan != -1 && s->age() > s->lifespan)) {
-			//			cout << "deleting sprite: " << s->name << endl;
 			tmp = sprites.erase(s);
 			s = tmp;
 		}

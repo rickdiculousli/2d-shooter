@@ -6,6 +6,8 @@
 //
 //  Kevin M. Smith - CS 134 SJSU
 
+// With modifications by Rick Li
+
 #include "Sprite.h"
 
 
@@ -15,41 +17,45 @@
 class Emitter : public BaseObject {
 public:
 	Emitter(SpriteSystem *);
+	// general methods
 	void draw();
 	void start();
 	void stop();
+	void update();
+
+	// methods for SpriteSystem
 	void setLifespan(float);
-	void setVelocity(ofVec3f);
-	void setChildVelocity(ofVec3f, float);
+	void setChildVelocity(ofVec3f, float); // params: direction, speed
 	void setChildImage(ofImage);
 	void setChildSize(float w, float h) { childWidth = w; childHeight = h; }
-	void setImage(ofImage);
 	void setRate(float);
 	float maxDistPerFrame();
-	void update();
 	void setChildWindowBound(bool);
-	void setWindowBound(bool);
 	void setSound(string);
+
+	// methods for emitter itself
+	void setVelocity(ofVec3f);
+	void setImage(ofImage);
+	void setWindowBound(bool);
+	
 	SpriteSystem *sys;
-	float rate;
-	ofVec3f velocity;
-	ofVec3f childDirection; // unit vector
-	float childSpeed;
-	float lifespan;
-	bool started;
-	float lastSpawned;
 	ofImage childImage;
 	ofImage image;
+	ofVec3f velocity;
+	ofVec3f childDirection; // unit vector
+	ofSoundPlayer bulletSound;
+	float rate;
+	float childSpeed;
+	float lifespan;
+	float lastSpawned;
+	float width, height;
+	float childWidth, childHeight;
+	bool started;
 	bool drawable;
 	bool haveChildImage;
 	bool haveImage;
 	bool isBoundByWindow;
-	float width, height;
-	float childWidth, childHeight;
-
 	bool haveSound;
-
-	ofSoundPlayer bulletSound;
 
 private:
 	void windowBounds();
