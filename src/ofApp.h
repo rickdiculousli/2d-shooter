@@ -31,9 +31,10 @@ class ofApp : public ofBaseApp{
 
 		bool bHide;
 
-		ofxFloatSlider rate;
+		ofxFloatSlider fireRate;
 		ofxFloatSlider life;
-		ofxVec3Slider velocity;
+		ofxFloatSlider direction;
+		ofxFloatSlider fireSpeed;
 		ofxLabel screenSize;
 
 		ofxPanel gui;
@@ -42,5 +43,6 @@ class ofApp : public ofBaseApp{
 		Emitter *player;
 		int move[4];
 		float playerSpeed;
-		ofVec3f playerVelocity;
+		ofVec3f playerVelocity, principleDir;
+
 };

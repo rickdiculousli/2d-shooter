@@ -18,7 +18,8 @@ Emitter::Emitter(SpriteSystem *spriteSys) {
 	haveChildImage = false;
 	haveImage = false;
 	velocity = ofVec3f(0, 0, 0);
-	childVelocity = ofVec3f(100, 100, 0);
+	childDirection = ofVec3f(1, 1, 0).normalize();
+	childSpeed = 100;
 	drawable = true;
 	width = 50;
 	height = 50;
@@ -92,8 +93,9 @@ void Emitter::setVelocity(ofVec3f v) {
 	velocity = v;
 }
 
-void Emitter::setChildVelocity(ofVec3f v) {
-	childVelocity = v;
+void Emitter::setChildVelocity(ofVec3f dir, float speed) {
+	childDirection = dir.normalize();
+	childSpeed = speed;
 }
 
 void Emitter::setChildImage(ofImage img) {
@@ -111,12 +113,16 @@ void Emitter::setRate(float r) {
 	rate = r;
 }
 
-//float Emitter::maxDistPerFrame() {
-//	return  childVelocity.length() / ofGetFrameRate();
-//}
+float Emitter::maxDistPerFrame() {
+	return  childSpeed / ofGetFrameRate();
+}
 
 void Emitter::setChildWindowBound(bool b) {
 	sys->isBoundByWindow = b;
+}
+
+void Emitter::setWindowBound(bool b) {
+	isBoundByWindow = b;
 }
 
 void Emitter::windowBounds() {
@@ -138,7 +144,7 @@ void Emitter::windowBounds() {
 void Emitter::spawnSprite(float time) {
 	Sprite sprite;
 	if (haveChildImage) sprite.setImage(childImage);
-	sprite.velocity = childVelocity;
+	sprite.velocity = childDirection * childSpeed;
 	sprite.lifespan = lifespan;
 	sprite.setPosition(trans);
 	sprite.birthtime = time;

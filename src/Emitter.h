@@ -20,18 +20,20 @@ public:
 	void stop();
 	void setLifespan(float);
 	void setVelocity(ofVec3f);
-	void setChildVelocity(ofVec3f);
+	void setChildVelocity(ofVec3f, float);
 	void setChildImage(ofImage);
 	void setChildSize(float w, float h) { childWidth = w; childHeight = h; }
 	void setImage(ofImage);
 	void setRate(float);
-	//float maxDistPerFrame();
+	float maxDistPerFrame();
 	void update();
 	void setChildWindowBound(bool);
+	void setWindowBound(bool);
 	SpriteSystem *sys;
 	float rate;
 	ofVec3f velocity;
-	ofVec3f childVelocity;
+	ofVec3f childDirection; // unit vector
+	float childSpeed;
 	float lifespan;
 	bool started;
 	float lastSpawned;
