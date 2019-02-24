@@ -17,6 +17,7 @@ Emitter::Emitter(SpriteSystem *spriteSys) {
 	rate = 1;    // sprites/sec
 	haveChildImage = false;
 	haveImage = false;
+	haveSound = false;
 	velocity = ofVec3f(0, 0, 0);
 	childDirection = ofVec3f(1, 1, 0).normalize();
 	childSpeed = 100;
@@ -37,7 +38,8 @@ void Emitter::draw() {
 			image.draw(-image.getWidth() / 2.0 + trans.x, -image.getHeight() / 2.0 + trans.y);
 		}
 		else {
-			ofSetColor(0, 0, 255);
+			ofNoFill();
+			ofSetColor(169, 185, 186);
 			ofDrawRectangle(-width / 2 + trans.x, -height / 2 + trans.y, width, height);
 		}
 	}
@@ -57,6 +59,7 @@ void Emitter::update() {
 			// spawn a new sprite
 			spawnSprite(time);
 			lastSpawned = time;
+			if(haveSound) bulletSound.play();
 		}
 	}
 	cout << "spritesys# (" << sys->sprites.size() <<")" << endl;
@@ -73,6 +76,7 @@ void Emitter::start() {
 	float time = ofGetElapsedTimeMillis();
 	if ((time - lastSpawned) > (1000.0 / rate))
 	{
+		if (haveSound) bulletSound.play();
 		spawnSprite(time);
 		lastSpawned = time;
 	}
@@ -107,10 +111,16 @@ void Emitter::setChildImage(ofImage img) {
 
 void Emitter::setImage(ofImage img) {
 	image = img;
+	haveImage = true;
 }
 
 void Emitter::setRate(float r) {
 	rate = r;
+}
+
+void Emitter::setSound(string s) {
+	bulletSound.load(s);
+	haveSound = true;
 }
 
 float Emitter::maxDistPerFrame() {

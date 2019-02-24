@@ -56,7 +56,7 @@ void Sprite::draw() {
 		// in case no image is supplied, draw something.
 		// 
 		ofNoFill();
-		ofSetColor(255, 0, 0);
+		ofSetColor(253, 253, 49);
 		ofDrawRectangle(-width / 2.0 + trans.x, -height / 2.0 + trans.y, width, height);
 	}
 }

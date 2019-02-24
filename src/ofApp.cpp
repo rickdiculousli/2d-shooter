@@ -4,14 +4,17 @@
 
 void ofApp::setup(){
 	ofSetVerticalSync(true);  // working on 144hz monitor need to set Vsync true for consistent framerate. Default rate = 60fps
-	ofBackground(0, 0, 0);
+	ofBackground(30, 28, 45);
 
 	player = new Emitter(new SpriteSystem());
+	player->setImage(ofImage("images/ship.png"));
+	player->setChildImage(ofImage("images/shot.png"));
 	player->setChildSize(10,10);
 	player->stop();
 	player->setWindowBound(true);
 	player->setChildWindowBound(true);
 	player->setPosition(ofVec3f(ofGetWindowWidth() / 2, ofGetWindowHeight() * 2 / 3, 0));
+	player->setSound("sounds/pew_sound.wav");
 	playerVelocity = ofVec3f(0, 0, 0);
 	principleDir = ofVec3f(0, -1, 0);
 	playerSpeed = 5;  // pixels per frame

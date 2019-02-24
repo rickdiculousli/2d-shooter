@@ -29,6 +29,7 @@ public:
 	void update();
 	void setChildWindowBound(bool);
 	void setWindowBound(bool);
+	void setSound(string);
 	SpriteSystem *sys;
 	float rate;
 	ofVec3f velocity;
@@ -45,6 +46,10 @@ public:
 	bool isBoundByWindow;
 	float width, height;
 	float childWidth, childHeight;
+
+	bool haveSound;
+
+	ofSoundPlayer bulletSound;
 
 private:
 	void windowBounds();
